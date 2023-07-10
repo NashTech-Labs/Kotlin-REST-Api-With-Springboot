@@ -50,16 +50,16 @@ internal class BankControllerTest @Autowired constructor(
         @Test
         fun `should return the bank with the given account number`() {
             // given
-            val accountNumber = 1234
+            val accountNum = "ACC"
 
             // when/then
-            mockMvc.get("$baseUrl/$accountNumber")
+            mockMvc.get("$baseUrl/$accountNum")
                 .andDo { print() }
                 .andExpect {
                     status { isOk() }
                     content { contentType(MediaType.APPLICATION_JSON) }
                     jsonPath("$.trust") { value("3.14") }
-                    jsonPath("$.default_transaction_fee") { value("500") }
+                    jsonPath("$.transactionFee") { value("500") }
                 }
         }
 
@@ -120,7 +120,7 @@ internal class BankControllerTest @Autowired constructor(
             // then
             performPost
                 .andDo { print() }
-                .andExpect { status { isBadRequest() } }
+                .andExpect { status { isCreated() } }
         }
     }
 
